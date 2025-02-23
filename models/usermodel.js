@@ -18,7 +18,7 @@ const User = {
         }
     },
 
-    // Get user by username
+    // Get user by email
     getByEmail: async (email) => {
         try {
             return await db.oneOrNone('SELECT * FROM users WHERE email = $1', [email]);
@@ -42,30 +42,20 @@ const User = {
 
 
     // Update user profile
-    updateProfile: async (userId, gender, location, nk, contact_nk, profile_picture) => {
-        try {
-            await db.none(
-                `UPDATE users 
-                 SET  gender = $1, location = $2, nk = $3, contact_nk = $4, profile_picture = $5
-                 WHERE id = $6`,
-                [gender, location, nk, contact_nk, profile_picture, userId]
+    async updateById(userId, data) {
+        const { full_name, display_photo, gender, location, next_of_kin, next_of_kin_number } = data;
+    
+        const result = await db.query(`
+                UPDATE users 
+                SET full_name = $1, display_photo = $2, gender = $3, location = $4, 
+                next_of_kin = $5, next_of_kin_number = $6
+                WHERE id = $7
+                RETURNING *    `,
+                [full_name, display_photo, gender, location, next_of_kin, next_of_kin_number, userId]
             );
-        } catch (error) {
-            console.error('Profile Update Error:', error);
-            throw new Error('Error updating profile');
+    
+            return result.rows[0];
         }
-    },
-
-    // Check if profile is complete
-    isProfileComplete: async (userId) => {
-        try {
-            const user = await db.one('SELECT * FROM users WHERE id = $1', [userId]);
-            return user.gender && user.location && user.nk && user.contact_nk;
-        } catch (error) {
-            console.error('Profile Check Error:', error);
-            throw new Error('Error checking profile completeness');
-        }
-    }
-};
+    };
 
 module.exports = User;
