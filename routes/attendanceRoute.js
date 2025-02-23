@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { authenticateToken, authorizeRoles } = require('../middleware/authmiddleware');
-const Attendance = require('../models/attendancemodel');
+const attendance = require('../models/attendancemodel');
 
 // Get all attendance records
 router.get('/', authenticateToken, authorizeRoles('admin', 'superadmin'),async (req, res) => {
