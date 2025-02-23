@@ -7,7 +7,7 @@ const MemberRoute = require('./routes/membersroute');
 const AttendanceRoute = require('./routes/attendanceRoute');
 const AuthRoute = require('./routes/authRoutes');
 const { authenticateToken, authorizeRoles } = require('./middleware/authmiddleware');
-const ProfileRoute = require('./routes/profileRoute')
+// const ProfileRoute = require('./routes/profileRoute')
 
 
 
