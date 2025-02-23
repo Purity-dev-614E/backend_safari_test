@@ -41,31 +41,31 @@ const User = {
     },
 
 
-    // // Update user profile
-    // updateProfile: async (userId, safari_group, gender, location, nk, contact_nk, profile_picture) => {
-    //     try {
-    //         await db.none(
-    //             `UPDATE users 
-    //              SET safari_group = $1, gender = $2, location = $3, nk = $4, contact_nk = $5, profile_picture = $6 
-    //              WHERE id = $7`,
-    //             [safari_group, gender, location, nk, contact_nk, profile_picture, userId]
-    //         );
-    //     } catch (error) {
-    //         console.error('Profile Update Error:', error);
-    //         throw new Error('Error updating profile');
-    //     }
-    // },
+    // Update user profile
+    updateProfile: async (userId, gender, location, nk, contact_nk, profile_picture) => {
+        try {
+            await db.none(
+                `UPDATE users 
+                 SET  gender = $1, location = $2, nk = $3, contact_nk = $4, profile_picture = $5
+                 WHERE id = $6`,
+                [gender, location, nk, contact_nk, profile_picture, userId]
+            );
+        } catch (error) {
+            console.error('Profile Update Error:', error);
+            throw new Error('Error updating profile');
+        }
+    },
 
-    // // Check if profile is complete
-    // isProfileComplete: async (userId) => {
-    //     try {
-    //         const user = await db.one('SELECT * FROM users WHERE id = $1', [userId]);
-    //         return user.safari_group && user.gender && user.location && user.nk && user.contact_nk;
-    //     } catch (error) {
-    //         console.error('Profile Check Error:', error);
-    //         throw new Error('Error checking profile completeness');
-    //     }
-    // }
+    // Check if profile is complete
+    isProfileComplete: async (userId) => {
+        try {
+            const user = await db.one('SELECT * FROM users WHERE id = $1', [userId]);
+            return user.gender && user.location && user.nk && user.contact_nk;
+        } catch (error) {
+            console.error('Profile Check Error:', error);
+            throw new Error('Error checking profile completeness');
+        }
+    }
 };
 
 module.exports = User;
