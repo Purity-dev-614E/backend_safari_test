@@ -1,7 +1,7 @@
 //route for safari group
 const express = require('express');
 const router = express.Router();
-const SafariGroup = require('../models/safarigroupmodel');
+const SafariGroup = require('../models/safariGroupModel');
 const { authenticateToken, authorizeRoles } = require('../middleware/authmiddleware');
 
 
