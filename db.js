@@ -2,12 +2,11 @@
 const pgp = require('pg-promise')();
 
 const db = pgp({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'safariDB',
-  password: 'chelagat',
-  port: 5432,
+connectionString: 'postgresql://postgres.twfzhtlkxeicfesrrusi:8YMp77XdW!2B4PD@aws-0-eu-central-1.pooler.supabase.com:5432/postgres',
+ssl: { rejectUnauthorized: false }
 });
+
+db.connect();
 
 // Test connection
 db.any('SELECT NOW()')
