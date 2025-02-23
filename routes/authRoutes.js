@@ -16,10 +16,11 @@ router.post('/register', async (req, res) => {
     }
 
     // Default to 'user' if role is not provided
-    const userRole = role || 'user';
+    const roleMapping = { 'super admin': 'super admin', 'admin': 'admin', 'user': 'user' };
+    const userRole = roleMapping[role] || 'user';
 
     try {
-        await User.create(username, password, userRole, email);
+        await User.create(email, username, password, userRole);
         res.status(201).json({ message: 'User created successfully' });
     } catch (error) {
         res.status(500).json({ message: 'Error creating user', error: error.message });
@@ -30,7 +31,7 @@ router.post('/register', async (req, res) => {
 // POST /auth/login - Log in and get JWT token
 // Login user
 router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password} = req.body;
 
     // Check if username and password are provided
     if (!email || !password) {
@@ -38,7 +39,7 @@ router.post('/login', async (req, res) => {
     }
 
     try {
-        // Step 1: Find user by username
+        // Step 1: Find user by Email
         const user = await User.getByEmail(email);
         if (!user) {
             return res.status(400).json({ message: 'Invalid Email' });
@@ -50,14 +51,18 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ message: 'Invalid password' });
         }
 
+        
+
         // Step 3: Generate JWT Token
         const token = User.generateToken(user);
 
         // Step 4: Send response with token
-        res.json({ message: 'Login successful', token });
+        res.json({ message: 'Login successful', token, role : user.role });
     } catch (error) {
         // Handle server errors
         res.status(500).json({ message: 'Error during login', error: error.message });
     }
 });
+
+
 module.exports = router;
