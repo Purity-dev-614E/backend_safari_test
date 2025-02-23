@@ -7,6 +7,8 @@ const MemberRoute = require('./routes/membersroute');
 const AttendanceRoute = require('./routes/attendanceRoute');
 const AuthRoute = require('./routes/authRoutes');
 const { authenticateToken, authorizeRoles } = require('./middleware/authmiddleware');
+const ProfileRoute = require('./routes/profileRoute')
+
 
 
 const app = express();
@@ -18,6 +20,7 @@ app.use('/api/safari-groups', SafariGroupRoute , authenticateToken, authorizeRol
 app.use('/api/members', MemberRoute , authenticateToken, authorizeRoles);
 app.use('/api/attendance', AttendanceRoute, authenticateToken, authorizeRoles);
 app.use('/api/auth', AuthRoute);
+// app.use('api/profile', ProfileRoute, authenticateToken, authorizeRoles)
 
 app.get('/safariapi', (req, res) => {
     res.json({ message: 'Welcome to the API' });
