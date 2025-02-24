@@ -51,13 +51,20 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ message: 'Invalid password' });
         }
 
-        
+        const profileIncomplete = !user.full_name || !user.display_photo || 
+                                  !user.gender || !user.location || 
+                                  !user.next_of_kin || !user.next_of_kin_number;
+
 
         // Step 3: Generate JWT Token
         const token = User.generateToken(user);
 
         // Step 4: Send response with token
-        res.json({ message: 'Login successful', token, role : user.role });
+        res.json({ message: 'Login successful', 
+            token, 
+            role : user.role,
+            profileIncomplete
+        });
     } catch (error) {
         // Handle server errors
         res.status(500).json({ message: 'Error during login', error: error.message });
