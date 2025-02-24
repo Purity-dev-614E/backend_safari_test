@@ -1,23 +1,36 @@
-// const express = require('express');
-// const router = express.Router();
-// const User = require ('../models/usermodel')
-// const { authMiddleware } = require('../middleware/authmiddleware');
+const express = require('express');
+const router = express.Router();
+const authMiddleware = require('../middleware/authmiddleware'); // Ensure user is authenticated
+const User = require('../models/usermodel'); // Adjust path based on your structure
 
-// console.log('Loading profileRoute.js'); // Add this line
+// PUT /profile/update - Update user profile
+router.put('/update', authMiddleware, async (req, res) => {
+    const { full_name, display_photo, gender, location, next_of_kin, next_of_kin_number } = req.body;
 
-// // Update Profile (Protected Route)
-// router.put('/update', authMiddleware, async (req, res) => {
-//     const { gender, location, nk, contact_nk, profile_picture } = req.body;
-//     const userId = req.user.id; // Extracted from JWT
+    try {
+        // Get user from middleware (assuming authMiddleware sets req.user)
+        const userId = req.user.id;
 
-//     if (!gender || !location || !nk || !contact_nk) {
-//         return res.status(400).json({ error: 'All fields are required except profile picture' });
-//     }
+        // Check if all required fields are present
+        if (!full_name || !display_photo || !gender || !location || !next_of_kin || !next_of_kin_number) {
+            return res.status(400).json({ message: 'All fields are required' });
+        }
 
-//     try {
-//         await User.updateProfile(userId, gender, location, nk, contact_nk, profile_picture);
-//         res.json({ message: 'Profile updated successfully' });
-//     } catch (error) {
-//         res.status(500).json({ error: error.message });
-//     }
-// });
+        // Update user profile
+        const updatedUser = await User.updateById(userId, {
+            full_name, 
+            display_photo, 
+            gender, 
+            location, 
+            next_of_kin, 
+            next_of_kin_number
+        });
+
+        res.json({ message: 'Profile updated successfully', user: updatedUser });
+
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating profile', error: error.message });
+    }
+});
+
+module.exports = router;
