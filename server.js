@@ -10,7 +10,7 @@ const { authenticateToken, authorizeRoles } = require('./middleware/authmiddlewa
 const ProfileRoute = require('./routes/profileRoute')
 
 
-
+const PORT = process.env.PORT || 5000;
 const app = express();const winston = require('winston');
 
 const logger = winston.createLogger({
@@ -63,7 +63,7 @@ app.get('/safariapi', (req, res) => {
   res.json({ message: 'Welcome to the API' });
 });
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
   logger.info('Server is running on port 5000');
 });
 app.use(cors());
@@ -74,12 +74,13 @@ app.use('/api/safari-groups', SafariGroupRoute , authenticateToken, authorizeRol
 app.use('/api/members', MemberRoute , authenticateToken, authorizeRoles);
 app.use('/api/attendance', AttendanceRoute, authenticateToken, authorizeRoles);
 app.use('/api/auth', AuthRoute);
-app.use('/api/profile', ProfileRoute);
+// app.use('/api/profile', ProfileRoute);
 
 app.get('/safariapi', (req, res) => {
     res.json({ message: 'Welcome to the API' });
 });
 
-app.listen(5000, () => {
-    console.log('Server is running on port 5000');
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
