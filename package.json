@@ -21,7 +21,6 @@
     "nodemon": "^3.1.9",
     "pg": "^8.13.3",
     "pg-promise": "^11.10.2",
-    "safari_backend": "file:",
     "winston": "^3.17.0"
   }
 }
