@@ -75,7 +75,7 @@ app.use('/api/safari-groups', SafariGroupRoute , authenticateToken, authorizeRol
 app.use('/api/members', MemberRoute , authenticateToken, authorizeRoles);
 app.use('/api/attendance', AttendanceRoute, authenticateToken, authorizeRoles);
 app.use('/api/auth', AuthRoute);
-app.use('/api/profile', ProfileRoute);
+app.use('/api/profile', ProfileRoute,authenticateToken);
 
 app.get('/safariapi', (req, res) => {
     res.json({ message: 'Welcome to the API' });
