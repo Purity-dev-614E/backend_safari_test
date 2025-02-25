@@ -10,7 +10,7 @@ const { authenticateToken, authorizeRoles } = require('./middleware/authmiddlewa
 const ProfileRoute = require('./routes/profileRoute')
 
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 const app = express();const winston = require('winston');
 
 const logger = winston.createLogger({
