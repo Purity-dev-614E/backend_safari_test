@@ -4,7 +4,7 @@ const authMiddleware = require('../middleware/authmiddleware'); // Ensure user i
 const User = require('../models/usermodel'); // Adjust path based on your structure
 
 // PUT /profile/update - Update user profile
-router.put('/update', async (req, res) => {
+router.put('/update', authMiddleware, async (req, res) => {
     const { full_name, display_photo, gender, location, next_of_kin, next_of_kin_number } = req.body;
 
     try {
