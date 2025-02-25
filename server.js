@@ -65,7 +65,7 @@ app.get('/safariapi', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  logger.info('Server is running on port 5000');
+  logger.info('Server is running on port 5001');
 });
 app.use(cors());
 app.use(express.json());
@@ -81,6 +81,4 @@ app.get('/safariapi', (req, res) => {
     res.json({ message: 'Welcome to the API' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
