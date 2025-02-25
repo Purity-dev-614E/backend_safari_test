@@ -11,6 +11,7 @@ const ProfileRoute = require('./routes/profileRoute')
 require("dotenv").config();
 
 
+const PORT = process.env.PORT || 5001;
 const app = express();const winston = require('winston');
 
 const logger = winston.createLogger({
@@ -80,7 +81,6 @@ app.get('/safariapi', (req, res) => {
     res.json({ message: 'Welcome to the API' });
 });
 
-const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
