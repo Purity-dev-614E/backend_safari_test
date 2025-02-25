@@ -8,7 +8,7 @@ const AttendanceRoute = require('./routes/attendanceRoute');
 const AuthRoute = require('./routes/authRoutes');
 const { authenticateToken, authorizeRoles } = require('./middleware/authmiddleware');
 const ProfileRoute = require('./routes/profileRoute')
-
+require("dotenv").config();
 
 const PORT = process.env.PORT || 5001;
 const app = express();const winston = require('winston');
