@@ -43,15 +43,15 @@ const User = {
 
     // Update user profile
     async updateById(userId, data) {
-        const { full_name, display_photo, gender, location, next_of_kin, next_of_kin_number } = data;
+        const { full_name, gender, location, next_of_kin, next_of_kin_number } = data;
     
         const result = await db.oneOrNone(`
                 UPDATE users 
-                SET full_name = $1, display_photo = $2, gender = $3, location = $4, 
-                next_of_kin = $5, next_of_kin_number = $6
-                WHERE id = $7
+                SET full_name = $1, gender = $2, location = $3, 
+                next_of_kin = $4, next_of_kin_number = $5
+                WHERE id = $6
                 RETURNING *`,
-                [full_name, display_photo, gender, location, next_of_kin, next_of_kin_number, userId]
+                [full_name, gender, location, next_of_kin, next_of_kin_number, userId]
             );
     
             return result;

@@ -12,14 +12,13 @@ router.put('/update', authMiddleware.authenticateToken, async (req, res) => {
         const userId = req.user.id;
 
         // Check if all required fields are present
-        if (!full_name || !display_photo || !gender || !location || !next_of_kin || !next_of_kin_number) {
+        if (!full_name || !gender || !location || !next_of_kin || !next_of_kin_number) {
             return res.status(400).json({ message: 'All fields are required' });
         }
 
         // Update user profile
         const updatedUser = await User.updateById(userId, {
             full_name, 
-            display_photo, 
             gender, 
             location, 
             next_of_kin, 
@@ -34,7 +33,7 @@ router.put('/update', authMiddleware.authenticateToken, async (req, res) => {
 });
 
 //fetch user profile
-router.get('/User-profile', authMiddleware.authenticateToken, async (req, res) => {
+router.get('/profile', authMiddleware.authenticateToken, async (req, res) => {
     try {
         const userId = req.user.id;
         const user = await User.getById(userId);
