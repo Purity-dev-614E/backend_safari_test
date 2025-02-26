@@ -10,8 +10,11 @@ const authenticateToken = (req, res, next) => {
 
     jwt.verify(token, 'your_jwt_secret', (err, decoded) => {
         if (err) {
-            return res.status(403).json({ message: 'expired token' }),
-                res.status(403).json({ message: 'Invalid token' });
+            if (err.name === "TokenExpiredError") {
+                return res.status(403).json({ message: 'Expired token' });  // ✅ Only one response
+            } else {
+                return res.status(401).json({ message: 'Invalid token' });  // ✅ Only one response
+            }
         }
         req.user = decoded; // Attach the decoded user info to the request object
         next(); // Proceed to the next middleware/route handler
