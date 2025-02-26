@@ -34,7 +34,7 @@ router.put('/update', authMiddleware.authenticateToken, async (req, res) => {
 });
 
 //fetch user profile
-router.get('/profile', authMiddleware.authenticateToken, async (req, res) => {
+router.get('/User-profile', authMiddleware.authenticateToken, async (req, res) => {
     try {
         const userId = req.user.id;
         const user = await User.getById(userId);
