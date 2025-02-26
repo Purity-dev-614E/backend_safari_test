@@ -42,7 +42,7 @@ const User = {
 
 
     // Update user profile
-    async updateById(userId, data) {
+    async updateById(id, data) {
         const { full_name, display_photo, gender, location, next_of_kin, next_of_kin_number } = data;
     
         const result = await db.oneOrNone(`
@@ -51,15 +51,15 @@ const User = {
                 next_of_kin = $5, next_of_kin_number = $6
                 WHERE id = $7
                 RETURNING *`,
-                [full_name, display_photo, gender, location, next_of_kin, next_of_kin_number, userId]
+                [full_name, display_photo, gender, location, next_of_kin, next_of_kin_number, id]
             );
     
             return result;
         },
 
     // Get user by ID
-    async getById(userId) {
-        return await db.oneOrNone('SELECT * FROM users WHERE id = $1', [userId]);
+    async getById(id) {
+        return await db.oneOrNone('SELECT * FROM users WHERE id = $1', [id]);
     }
     };
 
