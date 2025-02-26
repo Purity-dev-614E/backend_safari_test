@@ -63,7 +63,7 @@ router.delete('/:id', authenticateToken, authorizeRoles('admin', 'super admin'),
 
 
 //get latest event
-router.get('/latest', authenticateToken, authorizeRoles('admin', 'super admin'), async (req, res) => {
+router.get('/latest', authenticateToken, async (req, res) => {
     try {
         const event = await Event.getLatest();
         res.json(event);
@@ -71,6 +71,9 @@ router.get('/latest', authenticateToken, authorizeRoles('admin', 'super admin'),
         res.status(500).json({ message: 'Error fetching latest event', error: error.message });
     }
 });
+
+//fetch latest event
+
 
 //update event status
 router.put('/:id/status', authenticateToken, authorizeRoles('admin', 'super admin'), async (req, res) => {
