@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { authenticateToken, authorizeRoles } = require('../middleware/authmiddleware');
-const event = require('../models/eventmodel');
+const event = require('../models/eventsmodel');
 
 // Get all events
 router.get('/', authenticateToken, authorizeRoles('admin', 'super admin'), async (req, res) => {
