@@ -33,4 +33,15 @@ router.put('/update', authMiddleware.authenticateToken, async (req, res) => {
     }
 });
 
+//fetch user profile
+router.get('/profile', authMiddleware.authenticateToken, async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const user = await User.getById(userId);
+        res.json({ user });
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching profile', error: error.message });
+    }
+});
+
 module.exports = router;

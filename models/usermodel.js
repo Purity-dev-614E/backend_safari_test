@@ -55,7 +55,12 @@ const User = {
             );
     
             return result;
-        }
+        },
+
+    // Get user by ID
+    async getById(userId) {
+        return await db.oneOrNone('SELECT * FROM users WHERE id = $1', [userId]);
+    }
     };
 
 module.exports = User;
