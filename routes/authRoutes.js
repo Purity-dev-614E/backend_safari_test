@@ -7,7 +7,7 @@ const { register, login, refreshToken } = require('../controllers/authcontroller
 router.post("/refresh-token", refreshToken);
 
 // POST /auth/register - Register a new user
-router.post('/register', async (req, res) => {
+router.post('/register', register, async (req, res) => {
     const { email ,username, password, role } = req.body;
 
     // Debugging log
@@ -33,7 +33,7 @@ router.post('/register', async (req, res) => {
 
 // POST /auth/login - Log in and get JWT token
 // Login user
-router.post('/login', async (req, res) => {
+router.post('/login',login, async (req, res) => {
     const { email, password} = req.body;
 
     // Check if username and password are provided
