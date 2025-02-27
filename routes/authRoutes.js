@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const User = require ('../models/usermodel')
 const { register, login, refreshToken } = require('../controllers/authcontroller');
-// const { refreshToken } = require("../controllers/authcontroller");
-
 
 // POST /auth/refresh-token - Refresh JWT token
 router.post("/refresh-token", refreshToken);
