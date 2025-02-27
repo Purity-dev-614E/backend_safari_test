@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const User = require ('../models/usermodel')
-const { register, login } = require('../controllers/authcontroller');
-const { refreshToken } = require("../controllers/authcontroller");
+const { register, login, refreshToken } = require('../controllers/authcontroller');
+// const { refreshToken } = require("../controllers/authcontroller");
+
+
+// POST /auth/refresh-token - Refresh JWT token
+router.post("/refresh-token", refreshToken);
 
 // POST /auth/register - Register a new user
 router.post('/register', async (req, res) => {
@@ -72,8 +76,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// POST /auth/refresh-token - Refresh JWT token
-router.post("/refresh-token", refreshToken);
+
 
 
 module.exports = router;
