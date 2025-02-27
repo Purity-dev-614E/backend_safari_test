@@ -35,10 +35,8 @@ const login = async (req, res) => {
         res.status(500).json({ message: 'Error during login', error: error.message });
     }
 };
-module.exports = { register, login };
 
-// Refresh token
-exports.refreshToken = (req, res) => {
+refreshToken = (req, res) => {
   const { refreshToken } = req.body;
   if (!refreshToken) return res.sendStatus(401);
 
@@ -52,5 +50,9 @@ exports.refreshToken = (req, res) => {
     return res.sendStatus(403); // Invalid token
   }
 };
+
+module.exports = { register, login, refreshToken };
+
+// Refresh token
 
 
