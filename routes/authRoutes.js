@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require ('../models/usermodel')
 const { register, login } = require('../controllers/authcontroller');
+const { refreshToken } = require("../controllers/authcontroller");
 
 // POST /auth/register - Register a new user
 router.post('/register', async (req, res) => {
@@ -70,6 +71,9 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ message: 'Error during login', error: error.message });
     }
 });
+
+// POST /auth/refresh-token - Refresh JWT token
+router.post("/refresh-token", refreshToken);
 
 
 module.exports = router;

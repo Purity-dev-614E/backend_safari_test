@@ -23,7 +23,7 @@ app.use(express.json());
 app.use('/api/safari-groups', SafariGroupRoute , authenticateToken, authorizeRoles);
 app.use('/api/members', MemberRoute , authenticateToken, authorizeRoles);
 app.use('/api/attendance', AttendanceRoute, authenticateToken, authorizeRoles);
-app.use('/api/auth', AuthRoute);
+app.use("/api/auth", require("./routes/authRoutes"));
 app.use('/api/profile', ProfileRoute,authenticateToken);
 app.use('/api/events', eventsRoute, authenticateToken, authorizeRoles);
 

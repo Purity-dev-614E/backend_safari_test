@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/usermodel');
+const { generateAccessToken, generateRefreshToken } = require("../utils/tokenservice");
 
 // Register new user
 const register = async (req, res) => {
@@ -34,5 +35,23 @@ const login = async (req, res) => {
         res.status(500).json({ message: 'Error during login', error: error.message });
     }
 };
+
+// Refresh token
+
+exports.refreshToken = (req, res) => {
+  const { refreshToken } = req.body;
+  if (!refreshToken) return res.sendStatus(401);
+
+  try {
+    const user = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const newAccessToken = generateAccessToken(user);
+    const newRefreshToken = generateRefreshToken(user); // If rotating tokens
+
+    res.json({ accessToken: newAccessToken, refreshToken: newRefreshToken });
+  } catch (err) {
+    return res.sendStatus(403); // Invalid token
+  }
+};
+
 
 module.exports = { register, login };
