@@ -17,7 +17,6 @@ const storeRefreshToken = (userId, refreshToken) => {
 
 module.exports = { storeRefreshToken };
 
-storeRefreshToken(user.id, generateAccessToken);
 
-module.exports = { generateAccessToken, generateRefreshToken, verifyToken };
+module.exports = { generateAccessToken, generateRefreshToken};
 
