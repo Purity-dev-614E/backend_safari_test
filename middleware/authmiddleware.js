@@ -34,4 +34,22 @@ const authorizeRoles = (...allowedRoles) => {
     };
 };
 
-module.exports = { authenticateToken, authorizeRoles };
+const verifyToken = (req, res, next) => {
+    const token = req.headers['authorization']?.split(' ')[1];  // Extract token from Authorization header
+
+    if (!token) {
+        return res.status(403).json({ message: 'Access token is required' });
+    }
+
+    // Verify token with the secret key
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+        if (err) {
+            return res.status(403).json({ message: 'Invalid or expired access token' });
+        }
+
+        req.user = decoded;  // Attach user info to the request object for later use
+        next();  // Proceed to the next middleware or route handler
+    });
+};
+
+module.exports = { authenticateToken, authorizeRoles, verifyToken};

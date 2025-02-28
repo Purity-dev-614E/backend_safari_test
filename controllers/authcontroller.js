@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/usermodel');
 const { generateAccessToken, generateRefreshToken } = require("../utils/tokenservice");
+const { error } = require('winston');
 
 // Register new user
 const register = async (req, res) => {
@@ -36,23 +37,27 @@ const login = async (req, res) => {
     }
 };
 
-refreshToken = (req, res) => {
+ const refreshToken = (req, res) => {
   const { refreshToken } = req.body;
-  if (!refreshToken) return res.sendStatus(401);
+  if (!refreshToken) return res.status(401).json({ error : 'Refresh token required'});
 
-  try {
-    const user = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-    const newAccessToken = generateAccessToken(user);
-    const newRefreshToken = generateRefreshToken(user); // If rotating tokens
 
-    res.json({ accessToken: newAccessToken, refreshToken: newRefreshToken });
-  } catch (err) {
-    return res.sendStatus(403); // Invalid token
-  }
+  const storedToken = getStoredRefreshToken(user.id);
+  if (storedToken !== refreshToken) return res.status(403).json({ error : "invalid refresh token" });
+
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
+        if(err) return res.status(403).json({error : "invalid or expired refresh token" });
+
+            
+    const newAccessToken = jwt.sign({ userId: decode.userId}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m'});
+    res.json({accessToken: newAccessToken});
+
+});
+
 };
 
 module.exports = { register, login, refreshToken };
 
-// Refresh token
+
 
 
