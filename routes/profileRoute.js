@@ -5,7 +5,7 @@ const User = require('../models/usermodel'); // Adjust path based on your struct
 
 // PUT /profile/update - Update user profile
 router.put('/update', authMiddleware.authenticateToken, async (req, res) => {
-    const { full_name, display_photo, gender, location, next_of_kin, next_of_kin_number } = req.body;
+    const { full_name, gender, location, next_of_kin, next_of_kin_number } = req.body;
 
     try {
         // Get user from middleware (assuming authMiddleware sets req.user)
