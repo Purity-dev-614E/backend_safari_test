@@ -6,7 +6,7 @@ const auth = require('../middleware/authmiddleware');
 
 
 //fetch user profile
-router.get('/profile', auth, async (req, res) => {
+router.get('/profile', auth.authenticateToken, async (req, res) => {
     try {
         const user = await User.getById(req.user.id
         );
@@ -18,7 +18,7 @@ router.get('/profile', auth, async (req, res) => {
 );
 
 //update user profile
-router.put('/profile', auth, async (req, res) => {
+router.put('/profile', auth.authenticateToken, async (req, res) => {
     try {
         const user = await User.updateById(req.user.id, req.body);
         res.json(user);
