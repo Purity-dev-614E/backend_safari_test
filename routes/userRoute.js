@@ -4,32 +4,15 @@ const router = express.Router();
 const auth = require('../middleware/authmiddleware');
 
 
-// Fetch user profile
-router.get('/:id', auth.authenticateToken, async (req, res) => {
+// Fetch all users
+router.get('/', auth.authenticateToken, async (req, res) => {
     try {
-        const user = await User.getById(req.user.id);
-        res.json(user);
+        const users = await User.getAll();
+        res.json(users);
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching user profile', error: error.message });
-    }
-}); 
-
-// Update user profile
-router.put('/:id', auth.authenticateToken, async (req, res) => {
-    try {
-        const user = await User.updateById(req.user.id, req.body);
-        res.json(user);
-    } catch (error) {
-        res.status(500).json({ message: 'Error updating user profile', error: error.message });
-    }
-}); 
-//delete user
-router.delete('/:id', auth.authenticateToken, auth.authorizeRoles ('super admin'), async (req, res) => {
-    try {
-        const user = await User.deleteById(req.user.id);
-        res.json(user);
-    } catch (error) {
-        res.status(500).json({ message: 'Error deleting user profile', error: error.message });
+        res.status(500).json({ message: 'Error fetching users', error: error.message });
     }
 });
+
+
 module.exports = router;

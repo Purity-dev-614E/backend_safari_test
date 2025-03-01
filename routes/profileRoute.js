@@ -33,13 +33,24 @@ router.put('/update', authMiddleware.authenticateToken, async (req, res) => {
 });
 
 //fetch user profile
-router.get('/profile', authMiddleware.authenticateToken, async (req, res) => {
+router.get('/profiledetails', authMiddleware.authenticateToken, async (req, res) => {
     try {
         const userId = req.user.id;
         const user = await User.getById(userId);
         res.json({ user });
     } catch (error) {
         res.status(500).json({ message: 'Error fetching profile', error: error.message });
+    }
+});
+
+// DELETE /profile/delete - Delete user profile
+router.delete('/deleteprofile', authMiddleware.authenticateToken, async (req, res) => {
+    try {
+        const userId = req.user.id;
+        await User.deleteById(userId);
+        res.json({ message: 'Profile deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting profile', error: error.message });
     }
 });
 
