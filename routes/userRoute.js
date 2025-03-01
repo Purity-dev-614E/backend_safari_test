@@ -23,3 +23,5 @@ router.put('/profile', auth.authenticateToken, async (req, res) => {
         res.status(500).json({ message: 'Error updating user profile', error: error.message });
     }
 }); 
+
+module.exports = router;
