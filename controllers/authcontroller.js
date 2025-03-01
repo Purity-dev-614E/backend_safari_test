@@ -16,9 +16,9 @@ const register = async (req, res) => {
 
 // Login user and generate JWT token
 const login = async (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     try {
-        const user = await User.getByUsername(username);
+        const user = await User.getByEmail(email);
         if (!user) {
             return res.status(400).json({ message: 'Invalid username or password' });
         }

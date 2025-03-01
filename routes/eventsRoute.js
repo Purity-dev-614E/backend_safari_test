@@ -72,7 +72,6 @@ router.get('/latest', authenticateToken, async (req, res) => {
     }
 });
 
-//fetch latest event
 
 
 //update event status

@@ -5,7 +5,7 @@ const auth = require('../middleware/authmiddleware');
 
 
 // Fetch user profile
-router.get('/profile', auth.authenticateToken, async (req, res) => {
+router.get('/user/:id', auth.authenticateToken, async (req, res) => {
     try {
         const user = await User.getById(req.user.id);
         res.json(user);
@@ -15,7 +15,7 @@ router.get('/profile', auth.authenticateToken, async (req, res) => {
 }); 
 
 // Update user profile
-router.put('/profile', auth.authenticateToken, async (req, res) => {
+router.put('/user/:id', auth.authenticateToken, async (req, res) => {
     try {
         const user = await User.updateById(req.user.id, req.body);
         res.json(user);
@@ -23,5 +23,13 @@ router.put('/profile', auth.authenticateToken, async (req, res) => {
         res.status(500).json({ message: 'Error updating user profile', error: error.message });
     }
 }); 
-
+//delete user
+router.delete('/user/:id', auth.authenticateToken, auth.authorizeRoles ('super admin'), async (req, res) => {
+    try {
+        const user = await User.deleteById(req.user.id);
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting user profile', error: error.message });
+    }
+});
 module.exports = router;
