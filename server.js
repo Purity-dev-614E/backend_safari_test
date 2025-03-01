@@ -15,7 +15,6 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || 5001;
 const app = express();const winston = require('winston');
-const { verifyToken } = require('./utils/tokenservice');
 
 
 app.use(cors());
