@@ -8,8 +8,15 @@ const generateRefreshToken = (user) => {
   return jwt.sign({ id: user.id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "7d" });
 };
 
+let refreshTokens = [];  // In-memory storage (this should be replaced with a real database in production)
 
-storeRefreshToken(user.id, generateAccessToken);
+const storeRefreshToken = (userId, refreshToken) => {
+    // Store the refresh token in your database or in-memory (this is just an example using an array)
+    refreshTokens.push({ userId, refreshToken });
+};
 
-module.exports = { generateAccessToken, generateRefreshToken, verifyToken };
+module.exports = { storeRefreshToken };
+
+
+module.exports = { generateAccessToken, generateRefreshToken};
 
