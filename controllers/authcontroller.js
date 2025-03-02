@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/usermodel');
 const { generateAccessToken, generateRefreshToken } = require("../utils/tokenservice");
+const  user  = require('../models/usermodel');
+
+
 
 // Register new user
 const register = async (req, res) => {
@@ -66,7 +69,7 @@ const refreshToken = async (req, res) => {
             { expiresIn: '14d' }
         );
 
-        res.json({ accessToken: newAccessToken , refreshToken: newRefreshToken });
+        res.json({ accessToken: newAccessToken , refreshToken: newRefreshToken,  userRole });
     });
 };
 
