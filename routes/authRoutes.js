@@ -65,7 +65,7 @@ router.post('/login',login, async (req, res) => {
         // Step 4: Send response with token
         res.json({ message: 'Login successful', 
             token, 
-            role : userRole,
+            role : user.role,
             profileIncomplete
         });
     } catch (error) {
