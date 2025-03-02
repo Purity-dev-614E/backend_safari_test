@@ -44,6 +44,7 @@ router.post('/login',login, async (req, res) => {
     try {
         // Step 1: Find user by Email
         const user = await User.getByEmail(email);
+        console.log('User:', user);
         if (!user) {
             return res.status(400).json({ message: 'Invalid Email' });
         }
@@ -65,7 +66,7 @@ router.post('/login',login, async (req, res) => {
         // Step 4: Send response with token
         res.json({ message: 'Login successful', 
             token, 
-            role : user.role,
+            role: user.role,
             profileIncomplete
         });
     } catch (error) {
