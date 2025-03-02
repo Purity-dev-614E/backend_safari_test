@@ -59,7 +59,11 @@ const User = {
 
     // Get user by ID
     async getById(userId) {
-        return await db.oneOrNone('SELECT * FROM users WHERE id = $1', [userId]);
+        try{
+            return await db.oneOrNone('SELECT * FROM users WHERE id = $1', [userId]);
+        } catch (error) {
+            throw new Error('Error fetching user');
+        }
     },
     
     //get all users

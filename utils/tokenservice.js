@@ -5,7 +5,7 @@ const generateAccessToken = (user) => {
 };
 
 const generateRefreshToken = (user) => {
-  return jwt.sign({ id: user.id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "7d" });
+  return jwt.sign({ id: user.id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "14d" });
 };
 
 let refreshTokens = [];  // In-memory storage (this should be replaced with a real database in production)
